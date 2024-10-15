@@ -8,24 +8,24 @@
 </head>
 <body>
     <div class="container">
+        <h1>Signup</h1>
     <form id="signupForm">
-        <div class="wrapper">
-        <label for="name">Name:</label>
-        <input type="text" id="name" required>
+        <label for="name" >Name:</label>
+        <input type="text" id="name" required placeholder="Enter your name">
         <label for="age">Age:</label>
-        <input type="number" id="age" required>
+        <input type="number" id="age" required placeholder="Enter your age">
         <label for="email">Email:</label>
-        <input type="email" id="email" required>
+        <input type="email" id="email" required placeholder="Enter your email">
         <label for="role">Role:</label>
-        <select id="role">
-            <option value="teacher">Teacher</option>
-            <option value="student">Student</option>
+        <select id="role" required >
+            <option value="teacher">Student</option>
+            <option value="student">Teacher</option>
             <option value="parent">Parent</option>
         </select>
         <label for="password">Password:</label>
-        <input type="password" id="password" required> <br>
-        <button type="submit">Signup</button>
-        </div>
+        <input type="password" id="password" required placeholder="Enter your password"> 
+        <button id="submit-btn" type="submit">Signup</button>
+       <p> Already have an account? </p> <a href="login.html">  Login </a>
     </form>
     </div>
 </body>

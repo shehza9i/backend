@@ -6,20 +6,37 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
     const age = document.getElementById('age').value;
     const role = document.getElementById('role').value;
     const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    
 
     // Check if all required fields are filled
-    if (!name || !age || !role || !password) {
+    if (!name || !age || !role || !password || !email)  {
         alert('Please fill in all fields.');
         return;
     }
 
+    if(age < -1) {
+        alert("age cannot be negative");
+        return;
+    }
+
+    if(password.length < 8) {
+        alert("password must be at least 8 characters" );
+        return;
+    }
+
+    if(password == "password" || password == "Password" || password == "PASSWORD" ) {
+        alert("password cannot be password");
+        return;
+    }
+
     // Send data to the server using fetch
-    fetch('/submit', {
+    fetch('http://localhost:3000/submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, age, role, password })
+        body: JSON.stringify({ name, age, role, password, email })
     })
     .then(response => {
         if (!response.ok) {
