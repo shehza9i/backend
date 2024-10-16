@@ -65,14 +65,14 @@ app.listen(port, () => {
 
 
 // POST route to handle login
+// POST route to handle login
 app.post('/login', async (req, res) => {
     try {
         // Extract the email and password from the request body
-        const { email, password, name } = req.body;
+        const { email, password } = req.body;
 
         // Check if the user exists in the MongoDB collection
         const user = await collection.findOne({ email });
-        const user2 = await collection.findOne({ name });
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -80,8 +80,8 @@ app.post('/login', async (req, res) => {
 
         // Compare the password (you can add encryption later if needed)
         if (user.password === password) {
-            // If the password matches, return success
-            return res.status(200).json({ message: 'Login successful' });
+            // If the password matches, return success with the user's name
+            return res.status(200).json({ message: 'Login successful', name: user.name });
         } else {
             // If the password does not match, return an error
             return res.status(401).json({ message: 'Invalid credentials' });
