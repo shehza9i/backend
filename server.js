@@ -68,10 +68,11 @@ app.listen(port, () => {
 app.post('/login', async (req, res) => {
     try {
         // Extract the email and password from the request body
-        const { email, password } = req.body;
+        const { email, password, name } = req.body;
 
         // Check if the user exists in the MongoDB collection
         const user = await collection.findOne({ email });
+        const user2 = await collection.findOne({ name });
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
