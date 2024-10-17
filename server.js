@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Connection URL to your MongoDB
-const url = 'mongodb://localhost:27017'; // Replace with your MongoDB connection string if using Atlas
+const url = 'mongodb+srv://shehzaan:naseema1976r@shehzaan.ymumn.mongodb.net/?retryWrites=true&w=majority&appName=shehzaan'; // Replace with your MongoDB connection string if using Atlas
 const dbName = 'test'; // Your database name
 const collectionName = 'testing'; // Your collection name
 
