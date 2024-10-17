@@ -6,7 +6,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     const data = { email, password };
 
-    fetch('http://localhost:3000/login', {  
+    fetch('https://backend-qwms.onrender.com/login', {  
         method: 'POST',  
         headers: {  
             'Content-Type': 'application/json',  

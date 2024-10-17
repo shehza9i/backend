@@ -31,7 +31,7 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
     }
 
     // Send data to the server using fetch
-    fetch('http://localhost:3000/submit', {
+    fetch('https://backend-qwms.onrender.com/submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
