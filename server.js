@@ -69,7 +69,7 @@ app.listen(port, () => {
 app.post('/login', async (req, res) => {
     try {
         // Extract the email and password from the request body
-        const { email, password } = req.body;
+        const { email, password,role } = req.body;
 
         // Check if the user exists in the MongoDB collection
         const user = await collection.findOne({ email });
@@ -86,6 +86,16 @@ app.post('/login', async (req, res) => {
             // If the password does not match, return an error
             return res.status(401).json({ message: 'Invalid credentials' });
         }
+
+        // Check if the role matches
+        if (user.password === password) {
+            // If the password matches, return success with the user's name
+            return res.status(200).json({ message: 'Login successful', name: user.name });
+        } else {
+            // If the password does not match, return an error
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
     } catch (error) {
         console.error('Login error:', error);
         return res.status(500).json({ message: 'An error occurred during login', error });

@@ -59,3 +59,8 @@ label {
     font-size: 16px;
     cursor: pointer;
 }
+
+#role {
+    margin-top: 2px;
+    margin-bottom: 10px;
+}

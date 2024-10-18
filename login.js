@@ -3,8 +3,9 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     const email = document.querySelector('input[name="email"]').value;
     const password = document.querySelector('input[name="password"]').value;
+    const role = document.getElementById('role').value;
 
-    const data = { email, password };
+    const data = { email, password, role };
 
     fetch('https://backend-qwms.onrender.com/login', {  
         method: 'POST',  
