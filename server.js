@@ -68,8 +68,8 @@ app.listen(port, () => {
 // POST route to handle login
 app.post('/login', async (req, res) => {
     try {
-        // Extract the email and password from the request body
-        const { email, password,role } = req.body;
+        // Extract the email, password, and role from the request body
+        const { email, password, role } = req.body;
 
         // Check if the user exists in the MongoDB collection
         const user = await collection.findOne({ email });
@@ -78,21 +78,18 @@ app.post('/login', async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Compare the password (you can add encryption later if needed)
+        // Compare the password
         if (user.password === password) {
-            // If the password matches, return success with the user's name
-            return res.status(200).json({ message: 'Login successful', name: user.name });
+            // Check if the role matches
+            if (user.role === role) {
+                // If both password and role match, return success
+                return res.status(200).json({ message: 'Login successful', name: user.name });
+            } else {
+                // If role does not match, return an error
+                return res.status(403).json({ message: 'Invalid role' });
+            }
         } else {
-            // If the password does not match, return an error
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
-        // Check if the role matches
-        if (user.password === password) {
-            // If the password matches, return success with the user's name
-            return res.status(200).json({ message: 'Login successful', name: user.name });
-        } else {
-            // If the password does not match, return an error
+            // If password does not match, return an error
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
