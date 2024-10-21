@@ -45,10 +45,10 @@ connectToMongoDB();
 app.post('/submit', async (req, res) => {
     try {
         // Get the data from the request body
-        const { name, age, role, password, email } = req.body;
+        const { name, age, role, password, email, phone } = req.body;
 
         // Insert the data into the MongoDB collection
-        const insertResult = await collection.insertOne({ name, age, role, password, email });
+        const insertResult = await collection.insertOne({ name, age, role, password, email, phone });
         
         // Send response back to the client
         res.status(200).json({ message: 'Data inserted successfully', data: insertResult });

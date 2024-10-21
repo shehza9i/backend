@@ -7,10 +7,11 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
     const role = document.getElementById('role').value;
     const password = document.getElementById('password').value;
     const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
     
 
     // Check if all required fields are filled
-    if (!name || !age || !role || !password || !email)  {
+    if (!name || !age || !role || !password || !email || !phone)  {
         alert('Please fill in all fields.');
         return;
     }
@@ -36,7 +37,7 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, age, role, password, email })
+        body: JSON.stringify({ name, age, role, password, email, phone })
     })
     .then(response => {
         if (!response.ok) {
