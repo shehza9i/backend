@@ -48,6 +48,7 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
     .then(data => {
         console.log('Success:', data);
         alert('Data submitted successfully!');
+        document.getElementById('signupForm').reset();
     })
     .catch((error) => {
         console.error('Error:', error);
