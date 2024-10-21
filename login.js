@@ -24,6 +24,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     .then(data => {
         // Handle successful login
         alert(`Login successful, welcome ${data.name}!` );
+        document.getElementById('loginForm').reset();
         // Redirect or perform actions upon successful login
         // For example: window.location.href = '/dashboard'; 
     })  
