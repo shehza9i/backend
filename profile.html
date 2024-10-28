@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <h2>User Profile</h2>
+    <div class="container">
+    <p>Name: <span id="user-name"></span></p>
+    <p>Email: <span id="user-email"></span></p>
+    <p>Phone : <span id="user-phone"></span></p>
+    <p>Role: <span id="user-role"></span></p>
+    <p>Joined on: <span id="user-createdAt"></span></p>
+    </div>
+
+
+    <script>
+        // Extract the userId from the query parameter
+        const params = new URLSearchParams(window.location.search);
+        const userId = params.get('userId');
+
+        // Fetch user details from the server
+        fetch(`/profile?userId=${userId}`)
+            .then(response => response.json())
+            .then(user => {
+                // Display user details
+                document.getElementById('user-name').innerText = user.name;
+                document.getElementById('user-email').innerText = user.email;
+                document.getElementById('user-role').innerText = user.role;
+                document.getElementById('user-createdAt').innerText = new Date(user.createdAt).toLocaleDateString();
+            })
+            .catch(error => {
+                console.error('Error fetching user details:', error);
+            });
+    </script>
+</body>
+</html>
