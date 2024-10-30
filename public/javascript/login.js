@@ -1,3 +1,5 @@
+// public/js/login.js
+
 document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -15,7 +17,6 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         body: JSON.stringify(data),  
     })  
     .then(response => {
-        // Check if the response is okay (status in the range 200-299)
         if (!response.ok) {  
             throw new Error(`HTTP error! status: ${response.status}`);  
         }  
@@ -23,16 +24,17 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     })  
     .then(data => {
         // Handle successful login
-        alert(`Login successful, welcome ${data.name}!` );
+        alert(`Login successful, welcome ${data.name}!`);
         document.getElementById('loginForm').reset();
-        // Redirect or perform actions upon successful login
-        // For example: window.location.href = '/dashboard'; 
+
+        // Store user details in session storage
+        sessionStorage.setItem('userDetails', JSON.stringify(data));
+
+        // Redirect to the profile page
+        window.location.href = 'profile.html'; 
     })  
     .catch(error => {  
         console.error('There was a problem with the fetch operation:', error);  
-        alert('Failed to log in. Please check your credentials and try again.'); // More user-friendly error message
+        alert('Failed to log in. Please check your credentials and try again.');
     });
 });
-
-
-

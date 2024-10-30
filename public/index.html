@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="/public/css/index.css">
 </head>
 <body>
     <div class="container">
@@ -16,7 +16,7 @@
         <input type="number" id="age" required placeholder="Enter your age">
         <label for="email">Email:</label>
         <input type="email" id="email" required placeholder="Enter your email">
-        <label for="phone">Phone:</label>
+        <label for="phone" maxlength="10" pattern="\d{10}" title="Please enter a 10-digit phone number" >Phone:</label>
         <input type="number" id="phone" required placeholder="Enter your phone number">
         <label for="role">Role:</label>
         <select id="role" required >
