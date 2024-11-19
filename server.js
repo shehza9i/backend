@@ -1,5 +1,3 @@
-// server.js
-
 import express from 'express';
 import bodyParser from 'body-parser';
 import { connectToMongoDB, getCollection } from './config/db.js'; // Import the functions
@@ -7,6 +5,7 @@ import { ObjectId } from 'mongodb'; // Import ObjectId
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import cors from 'cors';
+import { v4 as uuidv4 } from 'uuid'; // For generating unique IDs
 
 // Define __dirname in ES module scope
 const __filename = fileURLToPath(import.meta.url);
@@ -24,7 +23,7 @@ app.use(express.static(`${__dirname}/public`)); // Adjust according to your stru
 // Connect to MongoDB
 connectToMongoDB(); // Call this to establish the connection
 
-// POST route to handle form submission
+// POST route to handle user registration
 app.post('/submit', async (req, res) => {
     try {
         const { name, age, role, password, email, phone } = req.body;
@@ -32,14 +31,29 @@ app.post('/submit', async (req, res) => {
         // Get the collection
         const collection = getCollection();
         
-        // Insert the data into the MongoDB collection
-        const insertResult = await collection.insertOne({ name, age, role, password, email, phone });
+        // Create a new user document with a unique userId and createdAt field
+        const newUser = {
+            userId: uuidv4(), // Generate a unique user ID
+            name,
+            age,
+            role,
+            password,
+            email,
+            phone,
+            createdAt: new Date(), // Add the current timestamp
+        };
+
+        // Insert the user into the MongoDB collection
+        const insertResult = await collection.insertOne(newUser);
         
         // Send response back to the client
-        res.status(200).json({ message: 'Data inserted successfully', data: insertResult });
+        res.status(200).json({ 
+            message: 'User registered successfully', 
+            userId: newUser.userId // Return the generated userId
+        });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error inserting data', error });
+        res.status(500).json({ message: 'Error registering user', error });
     }
 });
 
@@ -47,10 +61,11 @@ app.post('/submit', async (req, res) => {
 app.post('/login', async (req, res) => {
     try {
         const { email, password, role } = req.body;
-        
+
         // Get the collection
         const collection = getCollection();
-        
+
+        // Find the user by email
         const user = await collection.findOne({ email });
 
         if (!user) {
@@ -59,15 +74,15 @@ app.post('/login', async (req, res) => {
 
         if (user.password === password) {
             if (user.role === role) {
-                // Send complete user details
+                // Send success response with the userId
                 return res.status(200).json({
                     message: 'Login successful',
+                    userId: user.userId, // Show userId after successful login
                     name: user.name,
-                    email: user.email,           // Ensure this is included
-                    phone: user.phone,           // Ensure this is included
+                    email: user.email,
+                    phone: user.phone,
                     role: user.role,
-                    createdAt: user.createdAt,   // Ensure this is included
-                    userId: user._id             // Include userId for profile page redirection
+                    createdAt: user.createdAt,
                 });
             } else {
                 return res.status(403).json({ message: 'Invalid role' });
@@ -78,33 +93,6 @@ app.post('/login', async (req, res) => {
     } catch (error) {
         console.error('Login error:', error);
         return res.status(500).json({ message: 'An error occurred during login', error });
-    }
-});
-
-// GET route to retrieve user profile by userId
-app.get('/profile', async (req, res) => {
-    try {
-        const { userId } = req.query;
-
-        // Get the collection
-        const collection = getCollection();
-        
-        const user = await collection.findOne({ _id: new ObjectId(userId) }); // Use ObjectId
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.status(200).json({
-            name: user.name,
-            email: user.email,
-            phone: user.phone,
-            role: user.role,
-            createdAt: user.createdAt // Ensure this field is present in the document
-        });
-    } catch (error) {
-        console.error('Error fetching user profile:', error);
-        res.status(500).json({ message: 'An error occurred while fetching user profile', error });
     }
 });
 

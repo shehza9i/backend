@@ -13,7 +13,7 @@ a {
 h2 {
     text-align: center;
     margin-bottom: 1rem;
-    margin-top: 1rem;
+    margin-top: 3rem;
 }
 
 .main {
@@ -35,7 +35,7 @@ h2 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     width: 23rem;
-    height: 18rem;
+    height: 20rem;
     background-color: rgb(238, 229, 213);
 }
 
